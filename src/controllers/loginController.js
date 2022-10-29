@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const authorModel = require("../models/authorModel");
+const {isvalidEmail} = require("../vaIidators/validator")
 
 
 const loginAuthor = async function (req, res) {
@@ -12,10 +13,6 @@ const loginAuthor = async function (req, res) {
     if (!req.body.email)
       return res.status(400).send({ status: false, msg: "email is required...!" })
 
-    const isvalidEmail = function (gmail) {
-      let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/   //.test(gmail);
-      return regex.test(gmail)
-    }
     if (!isvalidEmail(req.body.email)) {
       return res.status(400).send({ status: false, msg: "Please enter a valid format of email" })
     }
@@ -37,10 +34,10 @@ const loginAuthor = async function (req, res) {
     );
     res.setHeader("x-api-key", token);
 
-    res.status(201).send({ status: true, token: token });
+    return res.status(201).send({ status: true, token: token });
 
   } catch (err) {
-    res.status(500).send({ status: false, msg: err.message })
+    return res.status(500).send({ status: false, msg: err.message })
   }
 };
 

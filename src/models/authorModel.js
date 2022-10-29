@@ -3,12 +3,12 @@ const mongoose = require('mongoose');
 const authorSchema = new mongoose.Schema({
     fname: {
         type: String,
-        // required:true,
+        required:true,
         trim: true
     },
     lname: {
         type: String,
-        // required:[true,"Enter last name"],
+        required:[true,"Enter last name"],
         trim: true
     },
 
@@ -21,10 +21,8 @@ const authorSchema = new mongoose.Schema({
         type: String,
         trim: true,
         lowercase: true,
-        // unique: true,
-
-
-        // required: [true, "Email required"]
+        unique: true,
+        required: [true, "Email required"]
 
     },
 

@@ -1,11 +1,10 @@
 let jwt = require("jsonwebtoken")
 const mongoose = require('mongoose');
 const blogModel = require("../models/blogModel")
+const isValidObjectId = require("../vaIidators/validator");
+
 let decodedToken;
 
-const isValidObjectId = (ObjectId) => {
-  return mongoose.Types.ObjectId.isValid(ObjectId);   // to validate a MongoDB ObjectId we are use .isValid() method on ObjectId
-};
 
 /****************************************(Authentication)*****************************************************/
 const authenticate = async function (req, res, next) {
@@ -28,7 +27,7 @@ const authenticate = async function (req, res, next) {
     next()
   }
   catch (err) {
-    res.status(403).send({ status: false, msg: "You are Not authorised...!" })
+    return res.status(403).send({ status: false, msg: "You are Not authorised...!" })
   }
 
 }
@@ -59,6 +58,7 @@ const authorise = async function (req, res, next) {
 
 
 
+    
     /**validation for query params */
     if (req.query.hasOwnProperty('authorId')) {                //if authorId is present in request query
 
@@ -85,11 +85,11 @@ const authorise = async function (req, res, next) {
 
   }
   catch (err) {
-    res.status(500).send({ status: false, msg: err.msg })
+    return res.status(500).send({ status: false, msg: err.msg })
   }
 
 }
 
-module.exports = { authorise, authenticate, isValidObjectId }
+module.exports = { authorise, authenticate}
 
 
